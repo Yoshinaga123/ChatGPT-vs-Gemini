@@ -45,7 +45,10 @@ export interface SiteSelectors {
 export const CHATGPT_SELECTORS: SiteSelectors = {
   url: 'https://chatgpt.com/',
   partition: 'persist:chatgpt',
-  input: '#prompt-textarea, #mobile-composer-prompt', // div.ProseMirror[contenteditable] / 変種は textarea
+  // 2026-09-30 実測: Business の新規コンポーザーは id も data-testid も無く、
+  // div.ProseMirror[contenteditable][role="textbox"] だけがある。
+  // 旧 ID を先に書くので、個人向け UI では従来どおりそちらが選ばれる。
+  input: '#prompt-textarea, #mobile-composer-prompt, div.ProseMirror[contenteditable="true"][role="textbox"]',
   // 変種側は aria-label(英語)にしか手掛かりが無い。匿名 UI は日本語環境でも英語で配信される(実測)。
   // aria-label は 2026-08-21 実測 "Send message" / "Stop generating"、2026-08-23 実測 "Send prompt" / "Stop answering"
   // (data-testid は両日とも send-button / stop-button)
